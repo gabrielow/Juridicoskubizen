@@ -439,6 +439,54 @@ textarea {
   font-weight: 600;
 }
 
+.contact-hero {
+  background: url('assets/address.jpg') center/cover no-repeat;
+  border-radius: 14px;
+  padding: 1.2rem;
+  position: relative;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.contact-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.18));
+  pointer-events: none;
+}
+
+.contact-hero .contact-list,
+.contact-hero .map-mini {
+  position: relative;
+  z-index: 2;
+}
+
+.map-mini {
+  margin-top: 0.8rem;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  background: rgba(255,255,255,0.92);
+}
+
+.map-mini iframe {
+  display: block;
+  width: 100%;
+  height: 180px;
+  border: 0;
+}
+
+/* Dar ligera transparencia al iframe del mapa */
+.map-mini iframe {
+  opacity: 0.9;
+  transition: opacity 180ms ease;
+}
+
+.map-mini:hover iframe {
+  opacity: 1;
+}
+
 .contact-form {
   background: var(--color-fondo-principal);
   border-radius: var(--radius);
