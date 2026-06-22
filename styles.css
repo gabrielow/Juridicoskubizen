@@ -440,7 +440,7 @@ textarea {
 }
 
 .contact-hero {
-  background: url('assets/address.jpg') center/cover no-repeat;
+  background: url('assets/address.jpg') center right/cover no-repeat;
   border-radius: 14px;
   padding: 1.2rem;
   position: relative;
@@ -452,7 +452,7 @@ textarea {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.18));
+  background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.28));
   pointer-events: none;
 }
 
@@ -467,7 +467,7 @@ textarea {
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-  background: rgba(255,255,255,0.92);
+  background: rgba(255,255,255,0.55);
 }
 
 .map-mini iframe {
@@ -485,6 +485,43 @@ textarea {
 
 .map-mini:hover iframe {
   opacity: 1;
+}
+
+/* Botón sobre el mapa */
+.map-open-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  z-index: 4;
+  background: var(--color-resaltado);
+  color: #3b2b00;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+@media (max-width: 900px) {
+  .map-mini iframe {
+    height: 160px;
+  }
+}
+
+@media (max-width: 640px) {
+  .map-mini iframe {
+    height: 140px;
+  }
+  .contact-hero {
+    padding: 0.8rem;
+    border-radius: 10px;
+  }
+  .map-open-btn {
+    top: 8px;
+    right: 8px;
+    padding: 0.35rem 0.6rem;
+    font-size: 0.85rem;
+  }
 }
 
 .contact-form {
