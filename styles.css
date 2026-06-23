@@ -229,7 +229,7 @@ textarea {
 .hero-grid {
   position: relative;
   display: grid;
-  grid-template-columns: 1.2fr 0.9fr;
+  grid-template-columns: 1fr 1.4fr; /* aumentar tamaño de la tarjeta para aprovechar imagen cuadrada */
   gap: 3rem;
   align-items: center;
 }
@@ -295,27 +295,76 @@ textarea {
 }
 
 .hero-card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(250,250,250,0.94));
+  position: relative;
+  background: url('assets/specialist.JPG') center/cover no-repeat;
   border-radius: var(--radius);
-  padding: 2rem;
+  padding: 2.4rem;
   box-shadow: 0 30px 60px rgba(20,33,61,0.08);
+  overflow: hidden;
   border-left: 6px solid rgba(128,0,0,0.10);
+  color: var(--color-texto-invertido);
+  aspect-ratio: 1 / 1; /* forzar tarjeta cuadrada para usar imagen cuadrada */
+  min-height: 420px;
+  background-color: transparent; /* asegurar fondo transparente detrás de la imagen */
+}
+
+.hero-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Overlay ligero para mejorar contraste del texto sin tapar la imagen */
+  background: linear-gradient(180deg, rgba(0,0,0,0.16), rgba(0,0,0,0.06));
+  z-index: 1;
+}
+
+.hero-card > * {
+  position: relative;
+  z-index: 2;
 }
 
 .hero-card-badge {
   display: inline-flex;
-  background: var(--color-fondo-secundario);
-  color: var(--color-primario);
+  background: rgba(0,0,0,0.6); /* badge más oscuro para visibilidad */
+  color: var(--color-texto-invertido);
   border-radius: 999px;
-  padding: 0.35rem 0.75rem;
-  font-size: 0.8rem;
-  font-weight: 600;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 800;
   margin-bottom: 1rem;
+  letter-spacing: 0.06em;
+}
+
+.hero-card-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+  margin: 0.6rem 0 1rem 0;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+@media (max-width: 900px) {
+  .hero-card-image {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-card-image {
+    width: 88px;
+    height: 88px;
+  }
 }
 
 .hero-card h3 {
-  font-size: 1.8rem;
-  margin-bottom: 1.8rem;
+  font-size: 2.1rem;
+  margin-bottom: 1rem;
+  color: var(--color-texto-invertido);
+  font-weight: 800;
+  line-height: 1.05;
+  text-shadow: 0 12px 30px rgba(0,0,0,0.55);
 }
 
 .hero-card-stats {
@@ -323,17 +372,34 @@ textarea {
   gap: 1rem;
 }
 
+.hero-card-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
 .hero-card-stats div {
   display: flex;
   flex-direction: column;
-  background: var(--surface-alt);
-  border-radius: 14px;
+  background: rgba(0,0,0,0.36); /* cajas con más contraste para mejor legibilidad */
+  color: var(--color-texto-invertido);
+  border-radius: 12px;
   padding: 1rem;
+  align-items: flex-start;
+  border: 1px solid rgba(255,255,255,0.06);
 }
 
 .hero-card-stats strong {
-  font-size: 2rem;
-  color: var(--color-primario);
+  font-size: 1.9rem;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.hero-card-stats span {
+  font-size: 0.98rem;
+  opacity: 0.96;
+  color: #f1f1f1;
 }
 
 .logos {
@@ -470,6 +536,16 @@ textarea {
   background: rgba(255,255,255,0.55);
 }
 
+.map-qr {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.map-qr .map-mini { flex: 1; }
+
+.map-qr .whatsapp-qr { flex: 0 0 160px; }
+
 .map-mini iframe {
   display: block;
   width: 100%;
@@ -485,6 +561,40 @@ textarea {
 
 .map-mini:hover iframe {
   opacity: 1;
+}
+
+/* WhatsApp contact inside contact section */
+.contact-whatsapp {
+  display: inline-block;
+  background: linear-gradient(90deg,#25D366,#075E54);
+  color: #fff;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.whatsapp-qr {
+  margin-top: 1rem;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.whatsapp-qr img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  border: 6px solid #fff;
+}
+
+.whatsapp-qr p {
+  font-size: 0.9rem;
+  color: var(--color-texto-principal);
+  margin: 0;
 }
 
 /* Botón sobre el mapa */
@@ -522,6 +632,9 @@ textarea {
     padding: 0.35rem 0.6rem;
     font-size: 0.85rem;
   }
+
+  .map-qr { flex-direction: column; }
+  .map-qr .whatsapp-qr { flex: 0 0 auto; }
 }
 
 .contact-form {
