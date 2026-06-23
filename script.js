@@ -12,10 +12,18 @@ if (year) {
   if (!wa) return;
 
   // Set initial aria state and title based on current class
-  if (wa.classList.contains('whatsapp-collapsed')) {
+  // Helper to detect small screens
+  function isMobileView() {
+    return window.matchMedia('(max-width: 767px)').matches;
+  }
+
+  // Set initial aria state and title based on current class and viewport
+  if (wa.classList.contains('whatsapp-collapsed') && isMobileView()) {
     wa.setAttribute('aria-expanded', 'false');
     wa.setAttribute('title', 'WhatsApp (oculto)');
   } else {
+    // Ensure not collapsed on desktop
+    if (!isMobileView()) wa.classList.remove('whatsapp-collapsed');
     wa.setAttribute('aria-expanded', 'true');
     wa.setAttribute('title', 'Chatear por WhatsApp');
   }
@@ -27,11 +35,19 @@ if (year) {
     const current = window.scrollY || 0;
     if (!ticking) {
       window.requestAnimationFrame(() => {
-        if (current > lastScroll && current > 80) {
-          wa.classList.add('whatsapp-collapsed');
-          wa.setAttribute('aria-expanded', 'false');
-          wa.setAttribute('title', 'WhatsApp (oculto)');
+        // Only collapse on small screens
+        if (isMobileView()) {
+          if (current > lastScroll && current > 80) {
+            wa.classList.add('whatsapp-collapsed');
+            wa.setAttribute('aria-expanded', 'false');
+            wa.setAttribute('title', 'WhatsApp (oculto)');
+          } else {
+            wa.classList.remove('whatsapp-collapsed');
+            wa.setAttribute('aria-expanded', 'true');
+            wa.setAttribute('title', 'Contacto por WhatsApp');
+          }
         } else {
+          // On desktop keep it expanded
           wa.classList.remove('whatsapp-collapsed');
           wa.setAttribute('aria-expanded', 'true');
           wa.setAttribute('title', 'Contacto por WhatsApp');

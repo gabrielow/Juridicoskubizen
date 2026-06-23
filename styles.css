@@ -955,6 +955,18 @@ textarea {
   }
   .whatsapp-float svg { margin-left: 6px; margin-right: 4px; }
   .whatsapp-text { display: inline-block; font-weight: 700; font-size: 0.97rem; color: #fff; }
+
+  /* Aumentar especificidad para sobrescribir .contact-aside .whatsapp-float */
+  .contact-aside .whatsapp-float {
+    width: auto;
+    height: 56px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    gap: 10px;
+    justify-content: flex-start;
+  }
+  .contact-aside .whatsapp-float svg { margin-left: 6px; margin-right: 4px; }
+  .contact-aside .whatsapp-text { display: inline-block; font-weight: 700; font-size: 0.97rem; color: #fff; }
 }
 
 /* Entrada sutil desde abajo */
