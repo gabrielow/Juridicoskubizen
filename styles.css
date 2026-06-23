@@ -493,7 +493,7 @@ textarea {
   display: grid;
   grid-template-columns: 1fr 360px;
   gap: 2rem;
-  align-items: center;
+  align-items: end;
 }
 
 .about-section {
@@ -915,60 +915,79 @@ textarea {
   bottom: 24px;
   z-index: 99999;
   display: inline-flex;
-  gap: 10px;
   align-items: center;
-  background: #25D366; /* color oficial de WhatsApp */
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(180deg,#25D366,#1EBE58);
   color: #fff;
-  padding: 12px 14px;
-  border-radius: 999px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+  border-radius: 50%;
+  box-shadow: 0 10px 30px rgba(16,66,36,0.25);
   text-decoration: none;
-  transform: translateY(0);
-  transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease, width 200ms ease, padding 200ms ease, border-radius 200ms ease;
-  will-change: transform, opacity, width, padding;
+  transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+  will-change: transform;
 }
 
-.whatsapp-float svg { flex: 0 0 auto; }
-.whatsapp-text { font-weight: 700; font-size: 0.95rem; }
+.whatsapp-float svg { width: 28px; height: 28px; }
+.whatsapp-text { display: none; }
 
-.whatsapp-float:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(0,0,0,0.22); }
-
-/* pulse animation */
-@keyframes wa-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.28); }
-  70% { box-shadow: 0 0 0 12px rgba(37,211,102,0); }
-  100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
-}
-.whatsapp-float::after {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: 999px;
-  pointer-events: none;
-  animation: wa-pulse 2.6s infinite ease-out;
-}
+.whatsapp-float:hover { transform: translateY(-6px) scale(1.04); box-shadow: 0 22px 48px rgba(16,66,36,0.28); }
 
 @media (max-width: 640px) {
-  .whatsapp-text { display: none; }
-  .whatsapp-float { right: 12px; bottom: 14px; padding: 10px; }
+  .whatsapp-float { right: 12px; bottom: 14px; width: 56px; height: 56px; }
 }
 
-/* Estado contraído: solo icono */
-.whatsapp-float.whatsapp-collapsed {
-  width: 52px !important;
-  padding: 10px !important;
-  border-radius: 50% !important;
-  gap: 0 !important;
+/* Mostrar texto CTA en pantallas grandes: estilo pill adjunto al ícono */
+@media (min-width: 768px) {
+  .whatsapp-float {
+    width: auto;
+    height: 56px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    gap: 10px;
+    justify-content: flex-start;
+  }
+  .whatsapp-float svg { margin-left: 6px; margin-right: 4px; }
+  .whatsapp-text { display: inline-block; font-weight: 700; font-size: 0.97rem; color: #fff; }
 }
 
-.whatsapp-float.whatsapp-collapsed .whatsapp-text {
-  opacity: 0;
-  transform: scale(0.75);
-  width: 0;
-  margin: 0;
+/* Entrada sutil desde abajo */
+@keyframes wa-slide-in {
+  from { transform: translateY(18px) scale(0.98); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+.whatsapp-float { animation: wa-slide-in 560ms cubic-bezier(.22,.9,.32,1) both; }
+
+/* Mantener compatibilidad con la clase contraída si existe */
+.whatsapp-float.whatsapp-collapsed { width: 52px !important; height: 52px !important; padding: 0 !important; border-radius: 50% !important; gap: 0 !important; }
+.whatsapp-float.whatsapp-collapsed .whatsapp-text { display: none; opacity: 0; transform: none; width: auto; margin: 0; pointer-events: none; }
+.whatsapp-float.whatsapp-collapsed svg { transform: none; }
+
+/* Burbuja y pulso extra para imitar el botón CodePen */
+.wa-bubble {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+}
+
+.wa-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(37,211,102,0.14);
+  z-index: 0;
   pointer-events: none;
+  animation: wa-pulse 1600ms ease-out infinite;
 }
 
-.whatsapp-float.whatsapp-collapsed svg {
-  transform: scale(1.05);
+.wa-bubble svg { position: relative; z-index: 1; }
+.wa-bubble img { position: relative; z-index: 1; width: 22px; height: 22px; display: block; }
+
+@keyframes wa-pulse {
+  0% { transform: scale(0.9); opacity: 0.9; }
+  70% { transform: scale(1.8); opacity: 0; }
+  100% { transform: scale(2.4); opacity: 0; }
 }

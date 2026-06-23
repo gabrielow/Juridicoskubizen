@@ -11,6 +11,15 @@ if (year) {
   const wa = document.querySelector('.whatsapp-float');
   if (!wa) return;
 
+  // Set initial aria state and title based on current class
+  if (wa.classList.contains('whatsapp-collapsed')) {
+    wa.setAttribute('aria-expanded', 'false');
+    wa.setAttribute('title', 'WhatsApp (oculto)');
+  } else {
+    wa.setAttribute('aria-expanded', 'true');
+    wa.setAttribute('title', 'Chatear por WhatsApp');
+  }
+
   let lastScroll = window.scrollY || 0;
   let ticking = false;
 
@@ -25,7 +34,7 @@ if (year) {
         } else {
           wa.classList.remove('whatsapp-collapsed');
           wa.setAttribute('aria-expanded', 'true');
-          wa.setAttribute('title', 'Chatear por WhatsApp');
+          wa.setAttribute('title', 'Contacto por WhatsApp');
         }
         lastScroll = current <= 0 ? 0 : current;
         ticking = false;
