@@ -20,8 +20,12 @@ if (year) {
       window.requestAnimationFrame(() => {
         if (current > lastScroll && current > 80) {
           wa.classList.add('whatsapp-collapsed');
+          wa.setAttribute('aria-expanded', 'false');
+          wa.setAttribute('title', 'WhatsApp (oculto)');
         } else {
           wa.classList.remove('whatsapp-collapsed');
+          wa.setAttribute('aria-expanded', 'true');
+          wa.setAttribute('title', 'Chatear por WhatsApp');
         }
         lastScroll = current <= 0 ? 0 : current;
         ticking = false;
