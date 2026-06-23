@@ -388,9 +388,12 @@ textarea {
   text-shadow: 0 12px 30px rgba(0,0,0,0.55);
 }
 
+/* Estadísticas dentro de la tarjeta hero: layout de dos columnas */
 .hero-card-stats {
   display: grid;
-  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 1rem;
 }
 
 .hero-card-stats {
@@ -540,7 +543,10 @@ textarea {
 .image-band .btn-primary { box-shadow: 0 12px 30px rgba(0,0,0,0.38); }
 
 /* Card backgrounds inside results should keep their surface look */
-.image-band .result-card { background: var(--surface); color: var(--color-texto-principal); z-index: 2; }
+.image-band .result-card {
+  background: var(--surface);
+  color: var(--color-texto-principal);
+  z-index: 2;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 1.5rem;
