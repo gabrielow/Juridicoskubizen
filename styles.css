@@ -475,14 +475,51 @@ textarea {
   align-items: center;
 }
 
-.about-section p,
-.contact-section p {
-  color: var(--muted);
-  margin-bottom: 1rem;
+.about-section {
+  background: transparent;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
-.about-panel div {
-  background: var(--surface);
+/* Contenedor que engloba 'Quiénes somos' y 'Casos destacados' y muestra la imagen completa */
+.image-band {
+  /* Mostrar la imagen completa: altura aumentada y escala por altura */
+  background-image: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.12)), url('assets/centro.JPG');
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: auto 100%; /* escalar imagen para que su altura ocupe todo el contenedor */
+  background-color: transparent;
+  width: 100vw; /* llegar a los bordes */
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  min-height: 1200px; /* aumentar para mostrar la imagen completa */
+  overflow: hidden;
+}
+
+/* Overlay y mejoras de legibilidad sobre la imagen, manteniendo transparencia */
+.image-band { position: relative; }
+.image-band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.42), rgba(0,0,0,0.12));
+  z-index: 1;
+  pointer-events: none;
+}
+.image-band .container { position: relative; z-index: 2; }
+.image-band .section-heading h2,
+.image-band .about-grid > div > h2,
+.image-band .about-grid > div h2,
+.image-band .about-grid > div p,
+.image-band p,
+.image-band .eyebrow {
+  color: rgba(255,255,255,0.96);
+  text-shadow: 0 10px 24px rgba(0,0,0,0.55);
+}
+.image-band .btn-primary { box-shadow: 0 12px 30px rgba(0,0,0,0.38); }
+
+/* Card backgrounds inside results should keep their surface look */
+.image-band .result-card { background: var(--surface); color: var(--color-texto-principal); z-index: 2; }
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 1.5rem;
@@ -778,12 +815,11 @@ textarea {
     grid-template-columns: 1fr;
   }
 
-  /* En pantallas pequeñas removemos la imagen para no interferir con el contenido */
-  .about-section {
+  /* En pantallas pequeñas retiramos la imagen del contenedor para mejorar legibilidad */
+  .image-band {
     background-image: linear-gradient(90deg, #f7f9ff 0%, #fff 100%);
     background-position: center top;
     background-size: cover;
-    min-height: auto;
   }
 
   .services-grid,
