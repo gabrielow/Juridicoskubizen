@@ -458,13 +458,19 @@ textarea {
 }
 
 .about-section {
-  background: linear-gradient(90deg, #f7f9ff 0%, #fff 100%);
+  /* Fondo: degradado + imagen del especialista recortada a la derecha */
+  /* Imagen con overlay tenue para legibilidad */
+  background-image: linear-gradient(90deg, rgba(247,249,255,0.12) 0%, rgba(255,255,255,0.12) 100%), url('assets/centro.JPG');
+  background-repeat: no-repeat, no-repeat;
+  background-position: right center, center center;
+  background-size: 45% auto, cover; /* primer valor para la imagen, segundo para el overlay */
+  background-color: transparent;
 }
 
 .about-grid,
 .contact-grid {
   display: grid;
-  grid-template-columns: 1fr 0.9fr;
+  grid-template-columns: 1fr 360px;
   gap: 2rem;
   align-items: center;
 }
@@ -473,11 +479,6 @@ textarea {
 .contact-section p {
   color: var(--muted);
   margin-bottom: 1rem;
-}
-
-.about-panel {
-  display: grid;
-  gap: 1rem;
 }
 
 .about-panel div {
@@ -504,6 +505,24 @@ textarea {
   color: var(--color-texto-principal);
   font-weight: 600;
 }
+
+/* Destacar elementos de contacto */
+.contact-link {
+  display: inline-block;
+  background: var(--surface);
+  padding: 0.45rem 0.8rem;
+  border-radius: 10px;
+  color: var(--color-primario);
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(20,33,61,0.06);
+}
+
+.contact-phone { border-left: 4px solid #25D366; padding-left: 0.6rem; }
+.contact-address { color: var(--color-texto-secundario); font-weight: 700; display: inline-block; padding: 0.45rem 0.8rem; background: var(--surface); border-radius: 10px; }
+
+.contact-map-icon svg { display: block; }
+.contact-map-icon { display: inline-flex; align-items: center; justify-content: center; padding: 6px; border-radius: 8px; background: var(--surface); box-shadow: 0 8px 18px rgba(20,33,61,0.05); }
 
 .contact-hero {
   background: url('assets/address.jpg') center right/cover no-repeat;
@@ -542,14 +561,23 @@ textarea {
   align-items: center;
 }
 
-.map-qr .map-mini { flex: 1; }
+/* Mostrar el mapa en un tamaño reducido (25% del contenedor) en escritorio */
+.map-qr .map-mini { flex: 0 0 25%; max-width: 25%; }
 
 .map-qr .whatsapp-qr { flex: 0 0 160px; }
+
+.contact-aside {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1rem;
+}
 
 .map-mini iframe {
   display: block;
   width: 100%;
-  height: 180px;
+  aspect-ratio: 1 / 1; /* mantener square pero pequeño */
+  height: auto;
   border: 0;
 }
 
@@ -574,21 +602,25 @@ textarea {
   text-decoration: none;
 }
 
+
 .whatsapp-qr {
-  margin-top: 1rem;
-  display: inline-flex;
+  width: 100%;
+  max-width: 360px;
+  display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  position: relative;
 }
 
 .whatsapp-qr img {
-  width: 140px;
-  height: 140px;
+  width: 100%;
+  height: 360px;
   object-fit: cover;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.12);
   border: 6px solid #fff;
+  display: block;
 }
 
 .whatsapp-qr p {
@@ -612,9 +644,74 @@ textarea {
   box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
+.contact-aside { position: relative; }
+
+/* Botón 'Abrir en Google Maps' junto al QR dentro del aside */
+.contact-aside .map-open-btn {
+  display: inline-block;
+  margin-top: 0.6rem;
+  background: var(--color-fondo-principal);
+  color: var(--color-primario);
+  border: 1px solid var(--color-borde);
+  padding: 0.5rem 0.8rem;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+/* Hacer el botón de WhatsApp siempre visible (fijo) y libre al hacer scroll */
+.contact-aside .whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99999;
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(90deg,#25D366,#075E54);
+  color: #fff;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.22);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.contact-aside .whatsapp-float:hover { transform: scale(1.06); box-shadow: 0 18px 40px rgba(0,0,0,0.26); }
+.contact-aside .whatsapp-text { display: none; }
+
+@media (max-width: 640px) {
+  .contact-aside .whatsapp-float { width: auto; height: auto; padding: 10px 12px; border-radius: 999px; }
+  .contact-aside .whatsapp-text { display: inline-block; margin-left: 8px; }
+}
+
+/* Botón de contacto textual colocado sobre el QR */
+.aside-contact-whatsapp {
+  position: absolute;
+  /* colocar el botón justo arriba del QR, centrado */
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  background: linear-gradient(90deg,#25D366,#075E54);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+}
+
+@media (max-width: 720px) {
+  .aside-contact-whatsapp { position: static; display: inline-block; margin-top: 0.6rem; }
+}
+
 @media (max-width: 900px) {
   .map-mini iframe {
     height: 160px;
+    aspect-ratio: auto;
   }
 }
 
@@ -635,6 +732,7 @@ textarea {
 
   .map-qr { flex-direction: column; }
   .map-qr .whatsapp-qr { flex: 0 0 auto; }
+  .map-qr .map-mini { flex: 0 0 100%; max-width: 100%; }
 }
 
 .contact-form {
@@ -678,6 +776,14 @@ textarea {
   .about-grid,
   .contact-grid {
     grid-template-columns: 1fr;
+  }
+
+  /* En pantallas pequeñas removemos la imagen para no interferir con el contenido */
+  .about-section {
+    background-image: linear-gradient(90deg, #f7f9ff 0%, #fff 100%);
+    background-position: center top;
+    background-size: cover;
+    min-height: auto;
   }
 
   .services-grid,
